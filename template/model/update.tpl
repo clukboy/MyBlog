@@ -4,14 +4,14 @@ func (m *default{{.upperStartCamelObject}}Model) Update(ctx context.Context, ses
     _, err := m.ExecCtx(ctx, func(ctx context.Context, conn sqlx.SqlConn) (result sql.Result, err error) {
 		query := fmt.Sprintf("update %s set %s where {{.originalPrimaryKey}} = {{if .postgreSql}}$1{{else}}?{{end}}", m.table, {{.lowerStartCamelObject}}RowsWithPlaceHolder)
 		if session != nil {
-            return session.ExecCtx(ctx, query, data.Id, data.Name, time.Now())
+            return session.ExecCtx(ctx, query,{{.expressionValues}},time.Now())
 
         }
 		return conn.ExecCtx(ctx, query, {{.expressionValues}},time.Now())
 	}, {{.keyValues}}){{else}}
 	query := fmt.Sprintf("update %s set %s where {{.originalPrimaryKey}} = {{if .postgreSql}}$1{{else}}?{{end}}", m.table, {{.lowerStartCamelObject}}RowsWithPlaceHolder)
     	if session != nil {
-    		_, err := session.ExecCtx(ctx, query, data.Id, data.Name, time.Now())
+    		_, err := session.ExecCtx(ctx, query,{{.expressionValues}},time.Now())
     		return err
     	}
     _,err:=m.conn.ExecCtx(ctx, query, {{.expressionValues}},time.Now()){{end}}

@@ -1,6 +1,6 @@
 
 func (m *default{{.upperStartCamelObject}}Model) Insert(ctx context.Context, session sqlx.Session, data *{{.upperStartCamelObject}}) (sql.Result,error) {
-	query, args, err := sq.Insert(m.table).Columns(userRows).Values({{.expressionValues}},data.CreateTime,data.UpdateTime).
+	query, args, err := sq.Insert(m.table).Columns({{.lowerStartCamelObject}}Rows).Values({{.expressionValues}},data.CreateTime,data.UpdateTime).
                                PlaceholderFormat(sq.Dollar).ToSql()
     if err != nil {
         return nil, err
