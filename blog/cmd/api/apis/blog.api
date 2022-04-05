@@ -1,0 +1,13 @@
+syntax = "v1"
+
+info(
+	title: "blog"
+	desc: "blog"
+	author: "李志成"
+	email: "clukboyli@gmail.com"
+	version: "1.0"
+)
+
+import (
+	"tag.api"
+)
