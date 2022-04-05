@@ -1,0 +1,50 @@
+syntax = "v1"
+
+
+
+
+type (
+    TagIdBody {
+        Id string `json:"id,optional" path:"id,optional"` // 标签id
+    }
+    TagInfo {
+        Id string `json:"id,optional"`                               // 标签id
+        Name string `json:"name"`                                    // 标签名称
+        AliasName string `json:"alias_name"`                         // 标签别名
+        Description string `json:"description"`                      // 标签描述
+        CreateTime time.Time `json:"create_time,optional"`           // 创建时间
+        UpdateTime time.Time `json:"update_time,optional"`           // 修改时间
+    }
+    TagPageReq {
+        Page int64 `json:"page"`                 // 页码
+        PageSize int64 `json:"pageSize"`         // 条数
+        KeyWord string `json:"keyWord,optional"` // 关键字
+    }
+)
+
+@server(
+    prefix : api/tag/v1
+    jwt: Auth
+    group: tag
+)
+service blog {
+    @doc "创建标签"
+    @handler CreateTag
+    post /create (TagInfo) returns (TagIdBody)
+
+    @doc "修改标签"
+    @handler UpateTag
+    post /update (TagInfo) returns (TagIdBody)
+
+    @doc "删除标签"
+    @handler RemoveTag
+    post /remove/:id (TagIdBody) returns (TagIdBody)
+
+    @doc "标签详情"
+    @handler DetailTag
+    post /:id (TagIdBody) returns (TagInfo)
+
+    @doc "标签列表"
+    @handler ListTag
+    post /list (TagPageReq) returns (TagInfo)
+}
